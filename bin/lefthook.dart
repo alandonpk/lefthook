@@ -6,7 +6,7 @@ import 'package:archive/archive_io.dart';
 import 'package:cli_util/cli_logging.dart';
 import 'package:system_info/system_info.dart';
 
-const _LEFTHOOK_VERSION = '0.6.3';
+const _LEFTHOOK_VERSION = '0.7.2';
 
 void main(List<String> args) async {
   final logger = new Logger.standard();
@@ -17,6 +17,7 @@ void main(List<String> args) async {
   final result = await Process.run(executablePath, args);
   if (result.exitCode != 0) {
     logger.stderr(result.stderr);
+    exit(1);
   } else {
     logger.stdout(result.stdout);
   }
