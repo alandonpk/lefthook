@@ -9,19 +9,13 @@ import 'package:system_info/system_info.dart';
 const _LEFTHOOK_VERSION = '0.7.2';
 
 void main(List<String> args) async {
-  print('EXECUTING LEFT HOOK...');
   final logger = new Logger.standard();
   final executablePath = Platform.script.resolve('../.exec/lefthook').toFilePath();;
 
   await _ensureExecutable(executablePath);
 
   final result = await Process.run(executablePath, args);
-  print('RESULT');
-  print(executablePath);
-  print(args);
-  print(result.exitCode);
   if (result.exitCode != 0) {
-    print('ERROR ....!!!!');
     logger.stderr(result.stderr);
     logger.stdout(result.stdout);
     exit(1);
