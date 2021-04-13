@@ -16,6 +16,10 @@ void main(List<String> args) async {
   await _ensureExecutable(executablePath);
 
   final result = await Process.run(executablePath, args);
+  print('RESULT');
+  print(executablePath);
+  print(args);
+  print(result.exitCode);
   if (result.exitCode != 0) {
     print('ERROR ....!!!!');
     logger.stderr(result.stderr);
