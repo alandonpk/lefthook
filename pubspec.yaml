@@ -1,10 +1,10 @@
 name: lefthook
-version: 0.6.5
+version: 0.6.6
 author: Igor Kamyshev <igor@kamyshev.me>
 description: Fast and powerful Git hooks manager for any type of projects.
 homepage: https://github.com/drt-pkgz/lefthook
 environment:
-  sdk: '>=2.0.0 <3.0.0'
+  sdk: ">=2.0.0 <3.0.0"
 dependencies:
   system_info: ^0.1.1
   archive: ^2.0.10
