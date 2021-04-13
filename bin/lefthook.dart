@@ -23,6 +23,7 @@ void main(List<String> args) async {
   if (result.exitCode != 0) {
     print('ERROR ....!!!!');
     logger.stderr(result.stderr);
+    logger.stdout(result.stdout);
     exit(1);
   } else {
     logger.stdout(result.stdout);
