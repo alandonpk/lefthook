@@ -72,7 +72,7 @@ String _resolveDownloadUrl() {
       return 'Windows';
     }
 
-    throw new Error();
+    throw new Error('Unsupported OS');
   }
 
   String getArchitecture() {
@@ -84,7 +84,7 @@ String _resolveDownloadUrl() {
 
     // TODO: check for i386
 
-    throw new Error();
+    throw new Error('Unsupported architecture: $arch');
   }
 
   final os = getOS();
