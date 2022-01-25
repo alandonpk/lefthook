@@ -110,7 +110,7 @@ Future<List<int>> _downloadFile(String url) async {
 Future<void> _saveFile(String targetPath, List<int> data) async {
   Future<void> makeExecutable(File file) async {
     String cmd;
-    List args;
+    List<String> args;
     if (Platform.isWindows) {
       cmd = "icacls";
       args = [file.path, "/grant", "%username%:(r,x)"];
