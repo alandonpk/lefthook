@@ -42,15 +42,10 @@ void _ensureExecutable(String targetPath, {bool force = false}) async {
   final file = await _downloadFile(url);
 
   logger.stdout('Download complete');
-  logger.stdout('');
-  logger.stdout('Extracting...');
 
-  final extracted = _exctractFile(file);
-
-  logger.stdout('Extracted');
   logger.stdout('');
   logger.stdout('Saving executable file...');
-  await _saveFile(targetPath, extracted);
+  await _saveFile(targetPath, file);
 
   logger.stdout('Saved to ${targetPath}');
   logger.stdout('');
@@ -110,10 +105,6 @@ Future<List<int>> _downloadFile(String url) async {
   await completer.future;
 
   return downloadData;
-}
-
-List<int> _exctractFile(List<int> downloadedData) {
-  return GZipDecoder().decodeBytes(downloadedData);
 }
 
 Future<void> _saveFile(String targetPath, List<int> data) async {
