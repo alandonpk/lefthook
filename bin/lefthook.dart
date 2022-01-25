@@ -6,11 +6,13 @@ import 'package:archive/archive_io.dart';
 import 'package:cli_util/cli_logging.dart';
 import 'package:system_info/system_info.dart';
 
-const _LEFTHOOK_VERSION = '0.7.2';
+const _LEFTHOOK_VERSION = '0.7.7';
 
 void main(List<String> args) async {
   final logger = new Logger.standard();
-  final executablePath = Platform.script.resolve('../.exec/lefthook').toFilePath();;
+  final executablePath =
+      Platform.script.resolve('../.exec/lefthook').toFilePath();
+  ;
 
   await _ensureExecutable(executablePath);
 
@@ -78,25 +80,29 @@ String _resolveDownloadUrl() {
   String getArchitecture() {
     final arch = SysInfo.kernelArchitecture;
 
-    if (arch == 'x86_64') {
-      return arch;
+    if (arch == 'AMD64') {
+      return 'x86_64';
     }
 
-    // TODO: check for i386
+    if (['x86_64', 'i386', 'arm64'].contains(arch)) {
+      return arch;
+    }
 
     throw 'Unsupported architecture: $arch';
   }
 
   final os = getOS();
+  final executableExt = os == 'Windows' ? '.exe' : '';
   final architecture = getArchitecture();
 
-  return 'https://github.com/Arkweid/lefthook/releases/download/v${_LEFTHOOK_VERSION}/lefthook_${_LEFTHOOK_VERSION}_${os}_${architecture}.gz';
+  return 'https://github.com/evilmartians/lefthook/releases/download/v${_LEFTHOOK_VERSION}/lefthook_${_LEFTHOOK_VERSION}_${os}_${architecture}${executableExt}';
 }
 
 Future<List<int>> _downloadFile(String url) async {
   HttpClient client = new HttpClient();
   final request = await client.getUrl(Uri.parse(url));
   final response = await request.close();
+  if (response.statusCode == 404) throw 'Lefthook executable not found at $url';
 
   final downloadData = List<int>();
   final completer = new Completer();
