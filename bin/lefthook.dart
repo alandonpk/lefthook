@@ -109,12 +109,17 @@ Future<List<int>> _downloadFile(String url) async {
 
 Future<void> _saveFile(String targetPath, List<int> data) async {
   Future<void> makeExecutable(File file) async {
+    String cmd;
+    List args;
     if (Platform.isWindows) {
-      // TODO: write code for Windows case
-      throw new Exception("Can' t set executable persmissions on Windows");
+      cmd = "icacls";
+      args = [file.path, "/grant", "%username%:(r,x)"];
+    } else {
+      cmd = "chmod";
+      args = ["u+x", file.path];
     }
 
-    final result = await Process.run("chmod", ["u+x", file.path]);
+    final result = await Process.run(cmd, args);
 
     if (result.exitCode != 0) {
       throw new Exception(result.stderr);
