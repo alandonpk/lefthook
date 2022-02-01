@@ -112,8 +112,9 @@ Future<void> _saveFile(String targetPath, List<int> data) async {
     String cmd;
     List<String> args;
     if (Platform.isWindows) {
+      final String username = Platform.environment['username'];
       cmd = "icacls";
-      args = [file.path, "/grant", "%username%:(r,x)"];
+      args = [file.path, "/grant", "$username:(r,x)"];
     } else {
       cmd = "chmod";
       args = ["u+x", file.path];
